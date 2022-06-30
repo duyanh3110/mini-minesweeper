@@ -200,6 +200,12 @@ const Board = () => {
     const newBoardData = boardData.slice();
     newBoardData[x][y].isFlag = false;
     newBoardData[x][y].isOpen = true;
+
+    const isWin = countHiddenMine(newBoardData);
+    if (isWin) {
+      dispatch(isWinningChange(true));
+      openModal();
+    }
     setBoardData(newBoardData);
   };
 
@@ -243,13 +249,6 @@ const Board = () => {
         dispatch(isResetChange(false));
       }
       setBoardData(initData);
-    }
-    if (countTime === "on") {
-      const isWin = countHiddenMine(boardData);
-      if (isWin) {
-        dispatch(isWinningChange(true));
-        openModal();
-      }
     }
   }, [boardData, minesList]);
 
